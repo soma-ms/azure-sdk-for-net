@@ -8,6 +8,7 @@ using Microsoft.Azure.Management.DataFactory.Models;
 using Microsoft.Rest.Azure;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace DataFactory.Tests.ScenarioTests
         public async Task DataFlowCrud()
         {
             string dataFlowName = "TestDataFlow";
+            string powerQueryName = "TestPowerQuery";
             string datasetName = "TestDataFlowDataset";
             string linkedServiceName = "TestDataFlowLinkedService";
 
@@ -43,6 +45,17 @@ namespace DataFactory.Tests.ScenarioTests
                 await GetList(client, this.ResourceGroupName, this.DataFactoryName, dataFlowName, updatedDataFlow);
 
                 await Delete(client, this.ResourceGroupName, this.DataFactoryName, dataFlowName);
+
+                // Power Query (Wrangling data flow)
+                DataFlowResource expectedPowerQuery = GetPowerQueryResource(null, datasetName);
+                await Create(client, this.ResourceGroupName, this.DataFactoryName, powerQueryName, expectedPowerQuery);
+                await GetList(client, this.ResourceGroupName, this.DataFactoryName, powerQueryName, expectedPowerQuery);
+
+                DataFlowResource updatedPowerQuery = GetPowerQueryResource("power query description", datasetName);
+                await Update(client, this.ResourceGroupName, this.DataFactoryName, powerQueryName, updatedPowerQuery);
+                await GetList(client, this.ResourceGroupName, this.DataFactoryName, powerQueryName, updatedPowerQuery);
+
+                await Delete(client, this.ResourceGroupName, this.DataFactoryName, powerQueryName);
                 await DatasetScenarioTests.Delete(client, this.ResourceGroupName, this.DataFactoryName, datasetName);
                 await LinkedServiceScenarioTests.Delete(client, this.ResourceGroupName, this.DataFactoryName, linkedServiceName);
             };
@@ -105,6 +118,35 @@ namespace DataFactory.Tests.ScenarioTests
             return resource;
         }
 
+        internal static DataFlowResource GetPowerQueryResource(string description, string datasetName)
+        {
+            DataFlowResource resource = new DataFlowResource
+            {
+                Properties = new PowerQueryDataFlow
+                {
+                    Description = description,
+                    Sources = new List<PowerQuerySource>() {
+                        new PowerQuerySource()
+                        {
+                            Name = "source",
+                            Description = "source 1",
+                            Dataset = new DatasetReference()
+                            {
+                                ReferenceName = datasetName,
+                                Parameters = new Dictionary<string, object>
+                                {
+                                    { "JobId", new Expression("@pipeline().parameters.JobId") }
+                                }
+                            }
+                        }
+                    },
+                    Script = "sample script"
+                }
+            };
+
+            return resource;
+        }
+
         internal static async Task Create(DataFactoryManagementClient client, string resourceGroupName, string dataFactoryName, string dataFlowName, DataFlowResource expectedDataFlow)
         {
             AzureOperationResponse<DataFlowResource> createDataFlowResponse = await client.DataFlows.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, dataFactoryName, dataFlowName, expectedDataFlow);
@@ -141,7 +183,13 @@ namespace DataFactory.Tests.ScenarioTests
         private static void ValidateDataFlow(DataFactoryManagementClient client, string resourceGroupName, string dataFactoryName, DataFlowResource expected, DataFlowResource actual, string expectedName)
         {
             ValidateSubResource(client, resourceGroupName, actual, dataFactoryName, expectedName, "dataflows");
-            Assert.IsType<MappingDataFlow>(actual.Properties);
+            if (string.Equals(expectedName, "TestPowerQuery", StringComparison.InvariantCultureIgnoreCase))
+            { 
+                Assert.IsType<PowerQueryDataFlow>(actual.Properties); 
+            }
+            else { 
+                Assert.IsType<MappingDataFlow>(actual.Properties); 
+            }
         }
     }
 }
