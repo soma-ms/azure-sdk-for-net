@@ -22,19 +22,21 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// </summary>
     [Newtonsoft.Json.JsonObject("ExecuteWranglingDataflow")]
     [Rest.Serialization.JsonTransformation]
-    public partial class ExecutePowerQueryActivity : Activity
+    public partial class ExecuteWranglingDataflowActivity : Activity
     {
         /// <summary>
-        /// Initializes a new instance of the ExecutePowerQueryActivity class.
+        /// Initializes a new instance of the ExecuteWranglingDataflowActivity
+        /// class.
         /// </summary>
-        public ExecutePowerQueryActivity()
+        public ExecuteWranglingDataflowActivity()
         {
             DataFlow = new DataFlowReference();
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ExecutePowerQueryActivity class.
+        /// Initializes a new instance of the ExecuteWranglingDataflowActivity
+        /// class.
         /// </summary>
         /// <param name="name">Activity name.</param>
         /// <param name="dataFlow">Data flow reference.</param>
@@ -63,7 +65,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="sinks">List of Power Query activity sinks mapped to a
         /// queryName. "{userquery: {value: Dataflow Sink object}}".</param>
         /// <param name="policy">Activity policy.</param>
-        public ExecutePowerQueryActivity(string name, DataFlowReference dataFlow, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), DataFlowStagingInfo staging = default(DataFlowStagingInfo), IntegrationRuntimeReference integrationRuntime = default(IntegrationRuntimeReference), ExecuteDataFlowActivityTypePropertiesCompute compute = default(ExecuteDataFlowActivityTypePropertiesCompute), object traceLevel = default(object), object continueOnError = default(object), object runConcurrently = default(object), IDictionary<string, PowerQuerySink> sinks = default(IDictionary<string, PowerQuerySink>), ActivityPolicy policy = default(ActivityPolicy))
+        public ExecuteWranglingDataflowActivity(string name, DataFlowReference dataFlow, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), DataFlowStagingInfo staging = default(DataFlowStagingInfo), IntegrationRuntimeReference integrationRuntime = default(IntegrationRuntimeReference), ExecuteDataFlowActivityTypePropertiesCompute compute = default(ExecuteDataFlowActivityTypePropertiesCompute), object traceLevel = default(object), object continueOnError = default(object), object runConcurrently = default(object), IDictionary<string, PowerQuerySink> sinks = default(IDictionary<string, PowerQuerySink>), ActivityPolicy policy = default(ActivityPolicy))
             : base(name, additionalProperties, description, dependsOn, userProperties)
         {
             DataFlow = dataFlow;

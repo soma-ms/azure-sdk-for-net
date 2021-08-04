@@ -753,7 +753,7 @@ namespace DataFactory.Tests.Utils
         {
             DataFlowResource resource = new DataFlowResource
             {
-                Properties = new PowerQueryDataFlow
+                Properties = new WranglingDataFlow
                 {
                     Description = description,
                     Sources = new List<PowerQuerySource>() {

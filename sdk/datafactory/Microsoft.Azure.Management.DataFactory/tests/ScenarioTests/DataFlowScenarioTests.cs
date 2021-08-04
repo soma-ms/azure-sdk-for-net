@@ -122,7 +122,7 @@ namespace DataFactory.Tests.ScenarioTests
         {
             DataFlowResource resource = new DataFlowResource
             {
-                Properties = new PowerQueryDataFlow
+                Properties = new WranglingDataFlow
                 {
                     Description = description,
                     Sources = new List<PowerQuerySource>() {
@@ -185,7 +185,7 @@ namespace DataFactory.Tests.ScenarioTests
             ValidateSubResource(client, resourceGroupName, actual, dataFactoryName, expectedName, "dataflows");
             if (string.Equals(expectedName, "TestPowerQuery", StringComparison.InvariantCultureIgnoreCase))
             { 
-                Assert.IsType<PowerQueryDataFlow>(actual.Properties); 
+                Assert.IsType<WranglingDataFlow>(actual.Properties); 
             }
             else { 
                 Assert.IsType<MappingDataFlow>(actual.Properties); 

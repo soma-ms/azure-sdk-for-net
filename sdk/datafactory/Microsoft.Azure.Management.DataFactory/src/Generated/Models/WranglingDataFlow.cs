@@ -20,20 +20,19 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     /// <summary>
     /// Power Query data flow.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("WranglingDataFlow")]
     [Rest.Serialization.JsonTransformation]
-    public partial class PowerQueryDataFlow : DataFlow
+    public partial class WranglingDataFlow : DataFlow
     {
         /// <summary>
-        /// Initializes a new instance of the PowerQueryDataFlow class.
+        /// Initializes a new instance of the WranglingDataFlow class.
         /// </summary>
-        public PowerQueryDataFlow()
+        public WranglingDataFlow()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PowerQueryDataFlow class.
+        /// Initializes a new instance of the WranglingDataFlow class.
         /// </summary>
         /// <param name="description">The description of the data flow.</param>
         /// <param name="annotations">List of tags that can be used for
@@ -42,7 +41,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// specified, Data flow will appear at the root level.</param>
         /// <param name="sources">List of sources in Power Query.</param>
         /// <param name="script">Power query mashup script.</param>
-        public PowerQueryDataFlow(string description = default(string), IList<object> annotations = default(IList<object>), DataFlowFolder folder = default(DataFlowFolder), IList<PowerQuerySource> sources = default(IList<PowerQuerySource>), string script = default(string))
+        public WranglingDataFlow(string description = default(string), IList<object> annotations = default(IList<object>), DataFlowFolder folder = default(DataFlowFolder), IList<PowerQuerySource> sources = default(IList<PowerQuerySource>), string script = default(string))
             : base(description, annotations, folder)
         {
             Sources = sources;
