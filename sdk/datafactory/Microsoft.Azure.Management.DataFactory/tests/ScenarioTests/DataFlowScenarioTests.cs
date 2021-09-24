@@ -139,7 +139,8 @@ namespace DataFactory.Tests.ScenarioTests
                             }
                         }
                     },
-                    Script = "sample script"
+                    Script = "sample script",
+                    DocumentLocale = "de-DE"
                 }
             };
 

@@ -7527,16 +7527,21 @@ namespace DataFactory.Tests.JsonSamples
                         computeType: ""MemoryOptimized"",
                         coreCount: 8                         
                     },
-                    sinks: {
-                        userquery: {
-                            name: ""sink1"",
-                            dataset: {
-                                referenceName: ""dataset1"",
-                                type: ""DatasetReference""
-                            },
-                            script: ""sink() ~> sink1""
+                    queries: [
+                        {
+                            queryName: ""UserQuery"",
+                            dataflowSinks: [
+                                {
+                                    name: ""sink1"",
+                                    dataset: {
+                                        referenceName: ""dataset1"",
+                                        type: ""DatasetReference""
+                                    },
+                                    script: ""sink() ~> sink1""
+                                }
+                            ]
                         }
-                    }
+                    ]
                 }
             }
         ]
